@@ -1,4 +1,6 @@
 import Search from './models/Search'
+import * as searchView from './views/searchView'
+import { elements, renderLoader, clearLoader } from './views/base'
 
 /** Global state of the app
  * - Search object
@@ -11,7 +13,7 @@ const state = {}
 
 const controlSearch = async () => {
     // 1) Get the query from view
-    const query = 'pizza' //TODO
+    const query = searchView.getInput()
 
     if(query) {
         // 2) New search object and add to state
@@ -19,19 +21,30 @@ const controlSearch = async () => {
         // the search query will now live in the state object
 
         // 3) Prepare UI for results
+        searchView.clearInput()
+        searchView.clearResults()
+        renderLoader(elements.searchRes)
 
         // 4) Search for recipes
-        // since the new search query obj now lives in the state obj, we now have the getResults method available in the state obj.
         await state.search.getResults()
 
         // 5) render results on UI
-        console.log(state.search.result)
+        clearLoader()
+        searchView.renderResults(state.search.result)
     }
 }
 
-document.querySelector('.search').addEventListener('submit', e => {
+
+ // EVENT LISTENERS
+elements.searchForm.addEventListener('submit', e => {
     e.preventDefault()
     controlSearch()
+})
+
+document.addEventListener('keypress', e => {
+    if (e.keyCode === 13 || e.which ===13) {
+        elements.searchInput.focus()
+    }
 })
 
 
