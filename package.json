@@ -11,6 +11,8 @@
   "author": "Taliaa",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
@@ -22,6 +24,8 @@
     "webpack-plugin": "^1.0.5"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0"
   }
 }
