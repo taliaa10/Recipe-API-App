@@ -1,4 +1,5 @@
 import Search from './models/Search'
+import Recipe from  './models/Recipe'
 import * as searchView from './views/searchView'
 import { elements, renderLoader, clearLoader } from './views/base'
 
@@ -11,6 +12,9 @@ import { elements, renderLoader, clearLoader } from './views/base'
  
 const state = {}
 
+/**
+ * SEARCH CONTROLLER
+ */
 const controlSearch = async () => {
     // 1) Get the query from view
     const query = searchView.getInput()
@@ -36,15 +40,31 @@ const controlSearch = async () => {
 
 
  // EVENT LISTENERS
-elements.searchForm.addEventListener('submit', e => {
-    e.preventDefault()
-    controlSearch()
-})
-
-document.addEventListener('keypress', e => {
+ document.addEventListener('keypress', e => {
     if (e.keyCode === 13 || e.which ===13) {
         elements.searchInput.focus()
     }
 })
 
+elements.searchForm.addEventListener('submit', e => {
+    e.preventDefault()
+    controlSearch()
+})
 
+elements.searchRes.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-inline')
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto, 10)
+        searchView.clearResults()
+        searchView.renderResults(state.search.result, goToPage)
+    }
+})
+
+
+
+/**
+ * SEARCH CONTROLLER
+ */
+// const r = new Recipe(47746)
+// r.getRecipe()
+// console.log(r)
